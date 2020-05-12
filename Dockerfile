@@ -13,7 +13,7 @@ RUN apt-get update &&  apt-get install -y \
 WORKDIR /app
 
 # install project dependencies
-RUN yarn
+RUN yarn install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
