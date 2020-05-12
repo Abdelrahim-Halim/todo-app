@@ -7,7 +7,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
   && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
   && apt-get -qqy install ${CHROME_VERSION:-google-chrome-stable}
-  
+
 # make the 'app' folder the current working directory
 WORKDIR /app
 
@@ -17,10 +17,10 @@ RUN yarn
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
-ENV PORT=8081
-ENV CYPRESS_BASE_URL=http://localhost:8081
+ENV PORT=4222
+ENV CYPRESS_BASE_URL=http://localhost:4222
 ENV DEBUG=cypress:*
 
-EXPOSE 8081
+EXPOSE 4222
 
 CMD yarn serve
