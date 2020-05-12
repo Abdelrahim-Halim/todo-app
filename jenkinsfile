@@ -4,19 +4,14 @@ pipeline
     stages {
         stage('build') {
             steps {
-                sh 'docker build -t app .'
+                sh 'docker build -t app . |  tee my-image.build.log '
             }
+            post { always {  archiveArtifacts artifacts: 'my-image.build.log' } } 
         }
-
-        stage('Dependencies') {
-            steps {
-                sh 'docker run -p 4222:4222 --name todo app test:e2e'
-            }
-        }
-
+ 
         stage('Lint') {
             steps {
-               sh "yarn lint" 
+               sh "docker run --rm -p 4222:4222 --name todo app lint" 
             } 
             post{
                 success{
@@ -30,7 +25,7 @@ pipeline
         
         stage("UnitTest"){
             steps{
-                sh 'yarn test:unit'
+                sh 'docker run --rm -p 4222:4222 --name todo app test:unit'
             }
             post{
                 success{
@@ -44,7 +39,7 @@ pipeline
 
         stage("e2eTest"){
             steps{
-                sh 'yarn test:e2e --headless'
+                sh 'docker run --rm -p 4222:4222 --name todo app test:e2e --headless'
             }
             post{
                 success{
