@@ -24,4 +24,6 @@ ENV DEBUG=cypress:*
 
 EXPOSE 4222
 
-CMD yarn serve
+ENTRYPOINT [ "yarn" ]
+
+CMD [ "serve" ]

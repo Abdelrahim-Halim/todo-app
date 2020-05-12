@@ -10,7 +10,7 @@ pipeline
 
         stage('Dependencies') {
             steps {
-                sh 'yarn'
+                sh 'docker run -p 4222:4222 --name todo app test:e2e'
             }
         }
 
