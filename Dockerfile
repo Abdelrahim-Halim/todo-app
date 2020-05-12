@@ -12,11 +12,12 @@ RUN apt-get update &&  apt-get install -y \
 # make the 'app' folder the current working directory
 WORKDIR /app
 
+# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY . .
+
 # install project dependencies
 RUN yarn install
 
-# copy project files and folders to the current working directory (i.e. 'app' folder)
-COPY . .
 
 ENV PORT=4222
 ENV CYPRESS_BASE_URL=http://localhost:4222
