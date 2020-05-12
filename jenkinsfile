@@ -11,7 +11,7 @@ pipeline
  
         stage('Lint') {
             steps {
-               sh "docker run --rm -p 4222:4222 --name todo app lint" 
+               sh "docker run --rm -p 5000:5000 --name todo app lint" 
             } 
             post{
                 success{
@@ -25,7 +25,7 @@ pipeline
         
         stage("UnitTest"){
             steps{
-                sh 'docker run --rm -p 4222:4222 --name todo app test:unit'
+                sh 'docker run --rm -p 5000:5000 --name todo app test:unit'
             }
             post{
                 success{
@@ -39,7 +39,7 @@ pipeline
 
         stage("e2eTest"){
             steps{
-                sh 'docker run --rm -p 4222:4222 --name todo app test:e2e --headless'
+                sh 'docker run --rm -p 5000:5000 --name todo app test:e2e --headless'
             }
             post{
                 success{
@@ -53,64 +53,3 @@ pipeline
         
     }
 }
-
-// pipeline {
-  
-//   agent {
-//     docker {
-//       image 'node'
-//     }
-//   }
-//   stages {
-//     stage('Clone Sources') {
-//       steps {
-//         git 'https://gitlab.com/chiminyau/ci-test.git'
-//       }
-//     }
-
-//     stage('Dependencies') {
-//       steps {
-//         sh 'npm install'
-//       }
-//     }
-//     stage('Unit Test') {
-//       steps {
-//         sh 'npm run unit'
-//       }
-//     }
-//     stage('E2E Test') {
-//       steps {
-//         sh 'npm run e2e'
-//       }
-//     }
-//     stage('Build') {
-//       steps {
-//         sh 'npm run build'
-//       }
-//     }
-//     stage('Artifacts') {
-//       steps {
-//         sh 'tar -czf dist.tar.gz ./dist'
-//         stash 'dist.tar.gz'
-//         stash 'Dockerfile'
-//         stash 'nginx.conf'
-//         archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
-//       }
-//     }
-//     stage('Docker Image') {
-//       agent {
-//         docker {
-//           image 'docker:dind'
-//         }
-//       }
-//       steps {
-//         sh 'docker -v'
-//         unstash 'dist.tar.gz'
-//         unstash 'Dockerfile'
-//         unstash 'nginx.conf'
-//         sh 'docker build -t registry.gitlab.com/chiminyau/ci-test:jenkins .'
-//       }
-//     }
-    
-//   }
-// }
