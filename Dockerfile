@@ -11,6 +11,10 @@ RUN yarn
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
+ENV PORT=8081
+ENV CYPRESS_BASE_URL=http://localhost:8081
+ENV DEBUG=cypress:*
+
 EXPOSE 8081
 
 CMD yarn serve
